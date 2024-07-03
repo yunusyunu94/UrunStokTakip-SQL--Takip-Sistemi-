@@ -1,0 +1,117 @@
+﻿
+@model List<UrunStokTakip.Models.Sepet>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Session["Ad"]</h2>
+<h3>Sepetim</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>Ürün Bilgisi</th>
+        <th>Adet</th>
+        <th>Fiyat</th>
+        <th>Tarih</th>
+        <th>Resim</th>
+        <th>Sil</th>
+        <th>Satın Al</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align:center; padding-top:40px">@item.Urun.Ad</td>
+            <td style="padding-top:40px;">
+                <div style="text-align:center;">
+                    @Html.ActionLink("-", "azalt", new { id = item.Id }, new { @class = "btn btn-info btn-sm azalt" })
+                </div>
+                <div>
+                    @Html.TextBoxFor(x => item.Adet, new { @class = "txt", data_id = item.Id })
+                </div>
+                <div>
+                    @Html.ActionLink("+", "arttir", new { id = item.Id }, new { @class = "btn btn-info btn-sm arttır" })
+                </div>
+            </td>
+            <td style="text-align:center; padding-top:40px">@item.Fiyat</td>
+            <td style="text-align:center; padding-top:40px">@Convert.ToDateTime(item.Tarih).ToString("dd/MM/yyy")</td>
+            <td style="text-align:center;">
+                <img src="~/Content/Img/@item.Urun.Resim" width="90" height="90" />
+            </td>
+            @if (User.IsInRole("U"))
+            {
+                <td style="text-align:center; padding-top:40px">
+                    @Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek istediğinizden eminmisiniz ?')" })
+                </td>
+                <td style="text-align:center; padding-top:40px">
+                    <a href="/Satis/SatinAl/@item.Id" class="btn btn-success">Satın Al</a>
+                </td>
+
+            }
+        </tr>
+    }
+</table>
+
+<div class="container">
+    @ViewBag.Tutar
+</div>
+<br />
+
+<div class="container">
+    <a href="/Satislar/HehsiniSatinAl" class="btn btn-success form-control">Tümünü Satın Al</a>
+</div>
+<br />
+<div class="container">
+    <a href="/Sepet/HepsiniSil" class="btn btn-danger form-control">Tümünü Sil</a>
+</div>
+
+<style>
+    .txt {
+        line-height: 18px;
+        width: 27px !important;
+        height: 32px;
+        font-size: 14px;
+        text-align: center;
+        border: solid 1px #ccc;
+        margin-left: 35px;
+    }
+
+
+    .arttır {
+        display: block;
+        cursor: pointer;
+        border: solid 1px #ccc;
+        position: absolute;
+        margin-top: -32px;
+        margin-left: 75px;
+    }
+
+    .azalt {
+        display: block;
+        cursor: pointer;
+        border: solid 1px #ccc;
+        position: absolute;
+        margin-right: 95px;
+    }
+</style>
+
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+
+<script>
+    $(function () {
+        $('.txt').on('change', function () {
+            var miktar = $(this).val();
+            var sepetid = $(this).attr('data-id');  // attr yani id sini al
+
+            $.ajax({
+                url: '/Sepet/AdetYaz',
+                data: { id: sepetid, miktari: miktar },
+                success: function (res) {
+                    document.location.reload();
+                }
+            });
+        });
+    });
+</script>
+

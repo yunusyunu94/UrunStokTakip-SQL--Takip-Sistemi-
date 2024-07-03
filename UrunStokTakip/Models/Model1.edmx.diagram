@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9e68ae77879c403c96c4c4d1d2d7f40a" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Kategori" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Kullanici" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Satislar" Width="1.5" PointX="6.625" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Satislar_Kullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Satislar_Kullanici1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.Sepet" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="Model.Urun" Width="1.5" PointX="3" PointY="4.75" />
+        <AssociationConnector Association="Model.FK_Urun_Kategori" />
+        <AssociationConnector Association="Model.FK_Sepet_Kullanici" />
+        <AssociationConnector Association="Model.FK_Satislar_Urun" />
+        <AssociationConnector Association="Model.FK_Sepet_Urun" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,22 @@
+﻿
+@model UrunStokTakip.Models.Kullanici
+@{
+    Layout = null;
+}
+
+<link href="~/NiceAdmin/css/bootstrap.min.css" rel="stylesheet" />
+
+<h3>@ViewBag.uyarı</h3>
+@using (Html.BeginForm("SifreReset", "Account", FormMethod.Post))
+{
+    <br /> 
+    <br />
+    <div class="form-group">
+        <div class="form-group">
+            <input type="text" name="Email" placeholder="E-mail Adresiniz" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Şifreyi Sıfırla" class="btn btn-success" />
+        </div>
+    </div>
+}

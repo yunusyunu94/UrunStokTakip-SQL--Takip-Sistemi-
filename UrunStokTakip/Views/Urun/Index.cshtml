@@ -1,0 +1,87 @@
+﻿
+@model List<UrunStokTakip.Models.Urun>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div style="width:25%; float:left">
+            @Html.TextBox("ara", null, new { @class = "form-control", @placeholder = "Ürün adı veya acıklama arayınız" })
+            <br />
+            <div style="float:left">
+                <input type="submit" name="btn" value="Ara" class="btn btn-info" />
+            </div>
+        </div>
+    }
+</div>
+<br />
+@if (User.IsInRole("A"))
+{
+    <a href="/Urun/Ekle" class="btn btn-primary">Ekle</a>
+}
+
+<br />
+<br />
+
+<table class="table table-bordered">
+    <tr>
+        <th style="text-align:center">Resim</th>
+        <th style="text-align:center">Ad</th>
+        <th style="text-align:center">Açıklama</th>
+        <th style="text-align:center">Popüler</th>
+        <th style="text-align:center">Fiyat</th>
+        <th style="text-align:center">Stok</th>
+        <th style="text-align:center">Kategori</th>
+
+        @if (User.IsInRole("A"))
+        {
+            <th style="text-align:center">Sil</th>
+            <th style="text-align:center">Düzenle</th>
+        }
+
+        @if (User.IsInRole("U"))
+        {
+            <td style="text-align:center">Sepete Ekle</td>
+        }
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><img src="~/Content/Img/@item.Resim" width="80" height="80" /></td>
+            <td style="text-align:center; padding-top:36px">@item.Ad</td>
+            <td style="text-align:center; padding-top:36px">@item.Aciklama</td>
+            <td style="text-align:center; padding-top:36px">
+                @if (item.Popüler == true)
+                {
+                    <label class="btn btn-success">Evet</label>
+                }
+
+                else
+                {
+                    <label class="btn btn-danger">Hayır</label>
+                }
+            </td>
+
+            <td style="text-align:center; padding-top:36px">@item.Fiyat</td>
+            <td style="text-align:center; padding-top:36px">@item.Stok</td>
+            <td style="text-align:center; padding-top:36px">@item.Kategori.Ad</td>
+
+            @if (User.IsInRole("A"))
+            {
+                <td style="text-align:center; padding-top:36px">@Html.ActionLink("Sil", "Delete", new { id = item.ıd }, new { @class = "btn btn-danger", onclick = "return confirm('" + item.Ad + " " + "Ürünü silmek istediğinizden eminmisiniz?')" })</td>
+
+                <td style="text-align:center; padding-top:36px"><a href="/Urun/Guncelle/@item.ıd" class="btn btn-warning">Güncelle</a></td>
+            }
+            @if (User.IsInRole("U"))
+            {
+                <td style="text-align:center; padding-top:36px"><a href="/Sepet/SepeteEkle/@item.ıd" class="btn btn-success">Sepete Ekle</a></td>
+            }
+
+        </tr>
+    }
+</table>
